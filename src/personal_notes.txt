@@ -79,4 +79,8 @@ on top of the commits from the original (upstream) repo.
                       - git stash apply - the same as Perforce's unshelve;
                       - git fetch origin - this will fetch all modifications from the server's origin to your local branch;
                       - git pull origin - this will fetch AND merge automatically all the changes from the server's origin;
-                      - git push origin master - this will commit your local master changes to the remote origin;
+                      - git push origin master - this will commit your local master changes to the remote origin. You must
+                        have such an origin repository, or create new blank one to upload a project to your new origin;
+                      - "New pull request" button from GitHub - this will send the changes for commit to the
+                        upstream (the original repo that we have forked from). Similar to git push, but from fork to upstream,
+                        instead from local master to remote origin;
