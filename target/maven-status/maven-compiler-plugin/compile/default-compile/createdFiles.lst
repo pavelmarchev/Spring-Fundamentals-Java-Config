@@ -1,0 +1,7 @@
+com\pafkata\repository\CustomerRepository.class
+com\pafkata\model\Customer.class
+com\pafkata\repository\HibernateCustomerRepositoryImpl.class
+com\pafkata\service\CustomerService.class
+Application.class
+com\pafkata\repository\DummyCustomerRepositoryImpl.class
+com\pafkata\service\CustomerServiceImpl.class

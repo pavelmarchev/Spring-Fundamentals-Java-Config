@@ -1,0 +1,82 @@
+Spring notes:
+
+- Simplified, Spring is just a HashMap of objects, which is defined in the applicationContext.xml;
+- namespaces give you predefined tags to use in the xml;
+- beans are simple POJOs, defined in applicationContext.xml and replacing coupled code like instantiating impl classes with "new" keyword;
+- we usually define the impl class, but use it by it's interface (impl classes are injected);
+- The goal is to write configurations (beans injected, dev/test environment switch, ...) separately from the
+  business logic WITHOUT RECOMPILING THE CODE! - "Separation of concerns" technique.
+- Two types of injection: setter (getters+setters of our bean) and constructor;
+- Wiring(two way)=injecting(one way)? Wiring is in the xml, injection is in the class?
+- Constructor injection is index based, comparing to setter injection (by name of the setter);
+- Constructor forces a contract, so you have to define a constructor for a sense of security.
+- Autowiring - 1) By type (setter): allows only 1 instance of the class to be wired. Looks for the arguments of that type in the setter method;
+  2) By name (setter): in the xml configuration you can have more beans of the same type, but the <bean> name property should be unique;
+  3) By constructor: ; 4) None.
+
+  Autowiring automatically wires a bean to the calling bean and instantiates it in the Spring container in the Application Context;
+
+- Stereotype annotations (@Service, @Repository and @Component as their parent class) - They help us scan and find components
+  and beans inside our application. @Component is used for any POJO or bean. @Service is business layer logic.
+  Business logic should NOT be in the controller classes or any other classes. @Repository is our
+  DAL layer (Data Access Language - JPA, Hibernate, Spring JDBC).
+
+- @Autowired (=autoinjected) - marks the variable/constructor/setter where the bean will get injected. Difference between
+  variable and setter autowiring? Difference is, that if you do not need to create unnecessary setters, use variable/field
+  injection. Otherwise, use setter injection when doing test-driven(first) development where we call the setters.
+
+  => True loose coupling through interfaces with Spring annotation. We can inject whatever impl we want with this approach.
+
+- JSR-330 specification: Cora java simple implementations of dependency injections without Spring. Why use Spring then? Spring is
+  more feature-rich and makes things much more easier by orchestrating different libraries together to work better.
+
+- Component scanner (context:component-scan in the xml and @ComponentScan in Java Configuration): scans the application
+  classes in runtime to find Spring components for the container.
+- applicationContext.xml is replaced by @Configuration annotation in AppConfig.java;
+- <bean>s defined in the applicationContext.xml are replaced with @Bean annotation in AppConfig.java;
+- Black box FILO dependency injection??? At least it is less confusing using Java Configuration, instead of xml.
+- Registered beans in the container are singletons by default, so that their state is cached (one instance of
+  the bean class per container) and returned on multiple calls.
+- Bean scope != Pattern;
+- 5 bean scopes: Singleton, Prototype, Request, Session and Global;
+- Prototype is the opposite of Singleton, meaning that it guarantees an unique
+  instance per request (Request scope is per HTTP request), when a bean is requested from the container;
+- Session scope is per HTTP session of the user (as the timeout is configured);
+- Global scope is per application, which is shared across all users using the application;
+- Properties are needed for values that can be changed according to the environment;
+
+Functional programing notes:
+
+- Laziness, purity, immutability.
+- imperative style of programming - write simple and confusing stuff.
+- Check the Supplier interface and implement it for laziness;
+
+GIT notes:
+
+- The correct workflow is to git pull --rebase upstream (rebase your work on top of new commits from upstream),
+and then git push --force origin, in order to rewrite the history in such a way your own commits are always
+on top of the commits from the original (upstream) repo.
+
+- Commands explained: - git add [*filename* | -A | -u | .] - adds a pending file, all files in the directory,
+                        only modified and deleted, new and modified, as part of the pending changes.
+                        Added files are now tracked for modifications by Git and will be included in
+                        future commits. Non-added will have no track info and won't be committed;
+                      - git init - initializes a git repository in the current folder (creates
+                        a .git folder);
+                      - git status - shows what changes are there for commit;
+                      - git commit [-m | -a | ] *comment* - commits the changes to the local repository (creates commit object
+                        in .git folder). This does not commit to the remote Git repo, this needs other actions (fetch, pull, push).
+                        Use -m for a message/comment, -a to automatically call add and stage untracked files. Use git pull before that;
+                      - git log - views statistic info of all commits done;
+                      - git diff *filename* - views changes made in this file;
+                      - git branch *branchname* - create a branch in the repository;
+                      - git config --global user.name *gitname* - ...;
+                      - git config --global user.email *gitemail* - ...;
+                      - git mergetool - this command launches a pre-installed tool for merging (like winmerge);
+                      - git checkout *branchname* - start working on this branch;
+                      - git stash - this is like Perforce's shelve. Stashes untracked files in the branch, so that those
+                        files are invisible for other branches until they are staged;
+                      - git stash apply - the same as Perforce's unshelve;
+                      - git fetch origin - this will fetch all modifications from the server's origin to your local branch;
+                      - git pull origin - this will fetch AND merge automatically all the changes from the server's origin;
+                      - git push origin master - this will commit your local master changes to the remote origin;
